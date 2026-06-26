@@ -391,7 +391,7 @@ footer{background:var(--pud);border-top:3px solid var(--g);padding:36px 20px;tex
     </div>
   </div>
   <p class="rtag">💍 An Engagement to Remember ✨</p>
-  <button class="rskip" onclick="dismissRing()">Skip ›</button>
+  <button class="rskip" onclick="dismissRingWithMusic()">Skip ›</button>
 </div>
 
 <!-- PETALS -->
@@ -642,6 +642,9 @@ function dismissRing(){
   showNav();
   startPetals();
   startAmbient();
+}
+function dismissRingWithMusic(){
+  dismissRing();
   tryMusic();
 }
 setTimeout(dismissRing, 4000);
@@ -668,7 +671,6 @@ document.querySelectorAll('.nlinks a').forEach(a=>a.addEventListener('click',()=
 function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
 
 /* ── MUSIC (YouTube) ── */
-let mOn=false;
 let ytPlayer=null;
 
 var tag=document.createElement('script');
@@ -680,20 +682,23 @@ function onYouTubeIframeAPIReady(){
   ytPlayer=new YT.Player('yt-player',{
     height:'0',width:'0',
     videoId:'ds9a7P6XUW0',
-    playerVars:{playsinline:1,controls:0,disablekb:1,loop:1,playlist:'ds9a7P6XUW0'}
+    playerVars:{playsinline:1,controls:0,disablekb:1,loop:1,playlist:'ds9a7P6XUW0'},
+    events:{'onReady':()=>{ytPlayer.mute();ytPlayer.playVideo();upBtn()}}
   });
 }
 
 function tryMusic(){
   if(!ytPlayer)return;
-  try{ytPlayer.playVideo();mOn=true;upBtn()}catch(e){}
+  ytPlayer.unMute();
+  upBtn();
+  spawnNotes();
 }
 function toggleMusic(){
   if(!ytPlayer)return;
-  if(mOn){ytPlayer.pauseVideo();mOn=false}else{ytPlayer.playVideo();mOn=true;spawnNotes()}
+  if(ytPlayer.isMuted()){ytPlayer.unMute();spawnNotes()}else{ytPlayer.mute()}
   upBtn();
 }
-function upBtn(){document.getElementById('mBtn').textContent=mOn?'🔇':'🎵'}
+function upBtn(){document.getElementById('mBtn').textContent=(!ytPlayer||ytPlayer.isMuted())?'🎵':'🔇'}
 function spawnNotes(){
   const ns=['♪','♫','♬','🎵','🎶'];
   for(let i=0;i<5;i++) setTimeout(()=>{

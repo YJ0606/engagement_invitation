@@ -684,20 +684,28 @@ function onYouTubeIframeAPIReady(){
     height:'0',width:'0',
     videoId:'ds9a7P6XUW0',
     playerVars:{playsinline:1,controls:0,disablekb:1,loop:1,playlist:'ds9a7P6XUW0'},
-    events:{'onReady':()=>{upBtn()}}
+    events:{'onReady':onPlayerReady}
   });
+}
+
+function onPlayerReady(){
+  ytPlayer.playVideo();
+  [500,1500,3000].forEach(d=>setTimeout(()=>{
+    try{ytPlayer.unMute();isPlaying=true;upBtn()}catch(e){}
+  },d));
 }
 
 function tryMusic(){
   if(!ytPlayer){setTimeout(tryMusic,200);return}
   ytPlayer.playVideo();
+  ytPlayer.unMute();
   isPlaying=true;
   upBtn();
   spawnNotes();
 }
 function toggleMusic(){
   if(!ytPlayer)return;
-  if(isPlaying){ytPlayer.pauseVideo();isPlaying=false}else{ytPlayer.playVideo();isPlaying=true;spawnNotes()}
+  if(isPlaying){ytPlayer.pauseVideo();isPlaying=false}else{ytPlayer.playVideo();ytPlayer.unMute();isPlaying=true;spawnNotes()}
   upBtn();
 }
 function upBtn(){document.getElementById('mBtn').textContent=isPlaying?'🔇':'🎵'}

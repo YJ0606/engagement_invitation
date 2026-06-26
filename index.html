@@ -397,10 +397,8 @@ footer{background:var(--pud);border-top:3px solid var(--g);padding:36px 20px;tex
 <!-- PETALS -->
 <div id="petals"></div>
 
-<!-- AUDIO -->
-<audio id="aud" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg"/>
-</audio>
+<!-- YOUTUBE PLAYER (hidden) -->
+<div id="yt-player" style="display:none"></div>
 
 <!-- ████ STICKY NAV ████ -->
 <nav id="nav">
@@ -669,14 +667,31 @@ function toggleNav(){document.getElementById('nlinks').classList.toggle('open')}
 document.querySelectorAll('.nlinks a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nlinks').classList.remove('open')));
 function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
 
-/* ── MUSIC ── */
+/* ── MUSIC (YouTube) ── */
 let mOn=false;
-const aud=document.getElementById('aud');
-aud.volume=0.25;
-function tryMusic(){aud.play().then(()=>{mOn=true;upBtn()}).catch(()=>{})}
+let ytPlayer=null;
+
+var tag=document.createElement('script');
+tag.src="https://www.youtube.com/iframe_api";
+var fs=document.getElementsByTagName('script')[0];
+fs.parentNode.insertBefore(tag,fs);
+
+function onYouTubeIframeAPIReady(){
+  ytPlayer=new YT.Player('yt-player',{
+    height:'0',width:'0',
+    videoId:'ds9a7P6XUW0',
+    playerVars:{playsinline:1,controls:0,disablekb:1,loop:1,playlist:'ds9a7P6XUW0'}
+  });
+}
+
+function tryMusic(){
+  if(!ytPlayer)return;
+  try{ytPlayer.playVideo();mOn=true;upBtn()}catch(e){}
+}
 function toggleMusic(){
-  if(mOn){aud.pause();mOn=false}else{aud.play();mOn=true}
-  upBtn(); if(mOn) spawnNotes();
+  if(!ytPlayer)return;
+  if(mOn){ytPlayer.pauseVideo();mOn=false}else{ytPlayer.playVideo();mOn=true;spawnNotes()}
+  upBtn();
 }
 function upBtn(){document.getElementById('mBtn').textContent=mOn?'🔇':'🎵'}
 function spawnNotes(){

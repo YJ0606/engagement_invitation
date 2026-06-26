@@ -647,7 +647,7 @@ function dismissRingWithMusic(){
   dismissRing();
   tryMusic();
 }
-setTimeout(dismissRing, 4000);
+setTimeout(()=>{dismissRing();tryMusic()}, 4000);
 
 /* ── NAV ── */
 function showNav(){document.getElementById('nav').classList.add('visible')}
@@ -672,6 +672,7 @@ function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
 
 /* ── MUSIC (YouTube) ── */
 let ytPlayer=null;
+let pendingUnmute=false;
 
 var tag=document.createElement('script');
 tag.src="https://www.youtube.com/iframe_api";
@@ -683,12 +684,19 @@ function onYouTubeIframeAPIReady(){
     height:'0',width:'0',
     videoId:'ds9a7P6XUW0',
     playerVars:{playsinline:1,controls:0,disablekb:1,loop:1,playlist:'ds9a7P6XUW0'},
-    events:{'onReady':()=>{ytPlayer.mute();ytPlayer.playVideo();upBtn()}}
+    events:{'onReady':onPlayerReady}
   });
 }
 
+function onPlayerReady(){
+  ytPlayer.mute();
+  ytPlayer.playVideo();
+  if(pendingUnmute){ytPlayer.unMute();pendingUnmute=false;spawnNotes()}
+  upBtn();
+}
+
 function tryMusic(){
-  if(!ytPlayer)return;
+  if(!ytPlayer){pendingUnmute=true;return}
   ytPlayer.unMute();
   upBtn();
   spawnNotes();

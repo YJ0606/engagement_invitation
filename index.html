@@ -672,7 +672,7 @@ function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
 
 /* ── MUSIC (YouTube) ── */
 let ytPlayer=null;
-let pendingUnmute=false;
+let isPlaying=false;
 
 var tag=document.createElement('script');
 tag.src="https://www.youtube.com/iframe_api";
@@ -684,29 +684,23 @@ function onYouTubeIframeAPIReady(){
     height:'0',width:'0',
     videoId:'ds9a7P6XUW0',
     playerVars:{playsinline:1,controls:0,disablekb:1,loop:1,playlist:'ds9a7P6XUW0'},
-    events:{'onReady':onPlayerReady}
+    events:{'onReady':()=>{upBtn()}}
   });
 }
 
-function onPlayerReady(){
-  ytPlayer.mute();
-  ytPlayer.playVideo();
-  if(pendingUnmute){ytPlayer.unMute();pendingUnmute=false;spawnNotes()}
-  upBtn();
-}
-
 function tryMusic(){
-  if(!ytPlayer){pendingUnmute=true;return}
-  ytPlayer.unMute();
+  if(!ytPlayer){setTimeout(tryMusic,200);return}
+  ytPlayer.playVideo();
+  isPlaying=true;
   upBtn();
   spawnNotes();
 }
 function toggleMusic(){
   if(!ytPlayer)return;
-  if(ytPlayer.isMuted()){ytPlayer.unMute();spawnNotes()}else{ytPlayer.mute()}
+  if(isPlaying){ytPlayer.pauseVideo();isPlaying=false}else{ytPlayer.playVideo();isPlaying=true;spawnNotes()}
   upBtn();
 }
-function upBtn(){document.getElementById('mBtn').textContent=(!ytPlayer||ytPlayer.isMuted())?'🎵':'🔇'}
+function upBtn(){document.getElementById('mBtn').textContent=isPlaying?'🔇':'🎵'}
 function spawnNotes(){
   const ns=['♪','♫','♬','🎵','🎶'];
   for(let i=0;i<5;i++) setTimeout(()=>{

@@ -5,6 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tushar & Sakshi — Engagement</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={
+  theme:{extend:{
+    animation:{
+      'glow':'glow 2s ease-in-out infinite',
+      'float':'float 3s ease-in-out infinite',
+      'shimmer':'shimmer 2.5s linear infinite',
+      'ring-pulse':'ringPulse 1.6s ease-in-out infinite',
+    },
+    keyframes:{
+      glow:{'0%,100%':{opacity:'.6'},'50%':{opacity:'1'}},
+      float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-6px)'}},
+      shimmer:{'0%':{backgroundPosition:'0%'},'100%':{backgroundPosition:'200%'}},
+      ringPulse:{
+        '0%,100%':{boxShadow:'0 0 25px var(--g),0 0 50px rgba(212,160,23,.2)'},
+        '50%':{boxShadow:'0 0 40px var(--gl),0 0 80px rgba(212,160,23,.35),0 0 120px rgba(212,160,23,.1)'}
+      }
+    }
+  }}
+}
+</script>
 <style>
 /* ════════════════════════════════════════════
    RESET & VARIABLES
@@ -199,10 +221,8 @@ body{font-family:'Playfair Display',serif;overflow-x:hidden;background:var(--pud
 .scroll-arr{
   width:22px;height:22px;
   border-right:2px solid var(--g);border-bottom:2px solid var(--g);
-  transform:rotate(45deg);animation:bounce .9s ease-in-out infinite;
+  transform:rotate(45deg);
 }
-@keyframes bounce{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(7px)}}
-
 /* CARD */
 #card-wrap{position:relative;z-index:10;width:min(540px,96vw);animation:cardIn 1.2s cubic-bezier(.22,1,.36,1) both}
 @keyframes cardIn{from{opacity:0;transform:translateY(60px) scale(.92)}to{opacity:1;transform:none}}
@@ -236,7 +256,7 @@ body{font-family:'Playfair Display',serif;overflow-x:hidden;background:var(--pud
 /* CENTER TEXT */
 .dia{color:var(--g);font-size:.8rem;margin:4px 0;letter-spacing:5px}
 .nm{font-family:'Playfair Display',serif;font-size:clamp(2.1rem,7vw,3.6rem);color:var(--wh);line-height:1.02;margin:3px 0}
-.amp{display:block;font-family:'Playfair Display',serif;font-size:clamp(1.1rem,3vw,1.6rem);color:var(--g);margin:2px 0;animation:hPulse 1.8s ease-in-out infinite}
+.amp{display:block;font-family:'Playfair Display',serif;font-size:clamp(1.1rem,3vw,1.6rem);color:var(--g);margin:2px 0}
 @keyframes hPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
 .inv{font-size:clamp(.68rem,2vw,.86rem);color:var(--cr);font-style:italic;margin:7px 0 4px;line-height:1.45}
 .dr{display:flex;align-items:center;justify-content:center;gap:9px;margin:7px 0}
@@ -278,11 +298,11 @@ body{font-family:'Playfair Display',serif;overflow-x:hidden;background:var(--pud
   background-size:200% auto;
   border:none;border-radius:50px;cursor:pointer;
   box-shadow:0 6px 24px rgba(128,0,32,.2);
-  animation:btnShim 2.5s linear infinite,btnPop .6s 1.8s cubic-bezier(.34,1.56,.64,1) both;
+  background-size:200% auto;
+  animation:btnPop .6s 1.8s cubic-bezier(.34,1.56,.64,1) both;
   transition:transform .25s,box-shadow .25s;
   text-decoration:none;display:block;
 }
-@keyframes btnShim{0%{background-position:0%}100%{background-position:200%}}
 @keyframes btnPop{from{transform:scale(0) translateY(20px);opacity:0}to{transform:none;opacity:1}}
 .scroll-cta:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 12px 36px rgba(128,0,32,.3)}
 
@@ -360,10 +380,8 @@ section{padding:72px 20px;position:relative;color:var(--cr)}
   text-decoration:none;
   box-shadow:0 7px 24px rgba(128,0,32,.2);
   transition:transform .25s,box-shadow .25s;
-  animation:mPulse2 2s ease-in-out infinite;
 }
 .mapbtn:hover{transform:translateY(-3px) scale(1.06);box-shadow:0 12px 36px rgba(128,0,32,.3)}
-@keyframes mPulse2{0%,100%{box-shadow:0 7px 24px rgba(128,0,32,.2)}50%{box-shadow:0 7px 24px rgba(128,0,32,.2),0 0 0 10px rgba(128,0,32,.06)}}
 
 /* ════════════════════════════════════════════
    BLESSING / CLOSING SECTION
@@ -499,11 +517,11 @@ footer{background:#EDE0D4;border-top:3px solid var(--g);padding:36px 20px;text-a
           <div class="mid">
             <div class="dia">✦</div>
             <h1 class="nm">Tushar</h1>
-            <span class="amp">&amp;</span>
+            <span class="amp animate-float">&amp;</span>
             <h1 class="nm">Sakshi</h1>
             <div class="dl"><span class="di">✦</span></div>
             <p class="inv">Together with their families<br>invite you to their</p>
-            <div style="font-size:1.4rem;margin:3px 0;animation:hPulse 2s ease-in-out infinite">💍</div>
+            <div class="animate-glow" style="font-size:1.4rem;margin:3px 0">💍</div>
             <p style="font-family:'Playfair Display',serif;font-size:clamp(.52rem,1.5vw,.66rem);color:var(--g);letter-spacing:3px;text-transform:uppercase;margin-bottom:4px">Engagement Ceremony</p>
             <div class="scratch-box">
               <div class="dr">
@@ -519,7 +537,7 @@ footer{background:#EDE0D4;border-top:3px solid var(--g);padding:36px 20px;text-a
             <p class="rc">Reception Follows</p>
             <div class="dia" style="margin-top:4px">✦</div>
             <!-- smooth scroll down CTA -->
-            <a href="#cd" class="scroll-cta">View Details &amp; Schedule ↓</a>
+            <a href="#cd" class="scroll-cta animate-shimmer hover:scale-105 transition-transform">View Details &amp; Schedule ↓</a>
           </div>
 
           <!-- RIGHT SIDE (mirror) -->
@@ -541,7 +559,7 @@ footer{background:#EDE0D4;border-top:3px solid var(--g);padding:36px 20px;text-a
   <!-- scroll hint arrow -->
   <div class="scroll-hint">
     <span>Scroll for Details</span>
-    <div class="scroll-arr"></div>
+    <div class="scroll-arr animate-bounce"></div>
   </div>
 
 </section>
@@ -563,7 +581,7 @@ footer{background:#EDE0D4;border-top:3px solid var(--g);padding:36px 20px;text-a
     <div class="cds">:</div>
     <div class="cdb"><span class="cdn" id="cdm">--</span><span class="cdl">Minutes</span></div>
     <div class="cds">:</div>
-    <div class="cdb"><span class="cdn" id="cds">--</span><span class="cdl">Seconds</span></div>
+    <div class="cdb animate-pulse"><span class="cdn" id="cds">--</span><span class="cdl">Seconds</span></div>
   </div>
 </section>
 
@@ -581,11 +599,11 @@ footer{background:#EDE0D4;border-top:3px solid var(--g);padding:36px 20px;text-a
     <p class="ssub">16 August 2026 · Baithak Hall, Sanpada, Navi Mumbai</p>
   </div>
   <div class="sgrid">
-    <div class="sc reveal"><div class="sci">🚪</div><div class="sct">09:00 AM</div><div class="sce">Guests Arrive</div><div class="scd">Welcome with traditional aarti, garlands and refreshments for all guests.</div></div>
-    <div class="sc reveal"><div class="sci">🌸</div><div class="sct">10:00 AM</div><div class="sce">Ring Ceremony</div><div class="scd">The magical moment — Tushar and Sakshi exchange rings surrounded by loved ones.</div></div>
-    <div class="sc reveal"><div class="sci">📸</div><div class="sct">11:00 AM</div><div class="sce">Photo &amp; Blessing</div><div class="scd">Timeless memories and heartfelt blessings from family and dear friends.</div></div>
-    <div class="sc reveal"><div class="sci">🍽️</div><div class="sct">12:30 PM</div><div class="sce">Engagement Feast</div><div class="scd">A lavish traditional feast celebrating this joyous occasion with everyone.</div></div>
-    <div class="sc reveal"><div class="sci">🎂</div><div class="sct">05:00 PM</div><div class="sce">Cake &amp; Farewell</div><div class="scd">Sweet goodbyes as the couple cuts their engagement cake to end the day.</div></div>
+    <div class="sc reveal hover:scale-[1.02] transition-transform"><div class="sci">🚪</div><div class="sct">09:00 AM</div><div class="sce">Guests Arrive</div><div class="scd">Welcome with traditional aarti, garlands and refreshments for all guests.</div></div>
+    <div class="sc reveal hover:scale-[1.02] transition-transform"><div class="sci">🌸</div><div class="sct">10:00 AM</div><div class="sce">Ring Ceremony</div><div class="scd">The magical moment — Tushar and Sakshi exchange rings surrounded by loved ones.</div></div>
+    <div class="sc reveal hover:scale-[1.02] transition-transform"><div class="sci">📸</div><div class="sct">11:00 AM</div><div class="sce">Photo &amp; Blessing</div><div class="scd">Timeless memories and heartfelt blessings from family and dear friends.</div></div>
+    <div class="sc reveal hover:scale-[1.02] transition-transform"><div class="sci">🍽️</div><div class="sct">12:30 PM</div><div class="sce">Engagement Feast</div><div class="scd">A lavish traditional feast celebrating this joyous occasion with everyone.</div></div>
+    <div class="sc reveal hover:scale-[1.02] transition-transform"><div class="sci">🎂</div><div class="sct">05:00 PM</div><div class="sce">Cake &amp; Farewell</div><div class="scd">Sweet goodbyes as the couple cuts their engagement cake to end the day.</div></div>
   </div>
 </section>
 
@@ -610,7 +628,7 @@ footer{background:#EDE0D4;border-top:3px solid var(--g);padding:36px 20px;text-a
       <div class="lpill">⏰ 10:00 AM</div>
       <div class="lpill">💍 Engagement</div>
     </div>
-    <a href="https://www.google.com/maps/place/Palm+Beach+Lawn+%26+Banquets,+Palm+Beach+Rd,+Sector+16,+Sanpada,+Navi+Mumbai,+Maharashtra+400705/@19.0575777,73.0038761,16z/data=!4m6!3m5!1s0x3be7c151a6cf4d99:0x57c688203c9aa3cf!8m2!3d19.0575777!4d73.0038761!16s%2Fg%2F11h_vymnq0?utm_campaign=ml-ardl&g_ep=Eg1tbF8yMDI2MDYyMl8wIOC7DCoASAJQAQ%3D%3D" target="_blank" class="mapbtn">
+    <a href="https://www.google.com/maps/place/Palm+Beach+Lawn+%26+Banquets,+Palm+Beach+Rd,+Sector+16,+Sanpada,+Navi+Mumbai,+Maharashtra+400705/@19.0575777,73.0038761,16z/data=!4m6!3m5!1s0x3be7c151a6cf4d99:0x57c688203c9aa3cf!8m2!3d19.0575777!4d73.0038761!16s%2Fg%2F11h_vymnq0?utm_campaign=ml-ardl&g_ep=Eg1tbF8yMDI2MDYyMl8wIOC7DCoASAJQAQ%3D%3D" target="_blank" class="mapbtn animate-pulse">
       🗺️ Open in Google Maps
     </a>
   </div>
